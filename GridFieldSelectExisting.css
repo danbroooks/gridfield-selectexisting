@@ -1,0 +1,14 @@
+
+.cms .ss-gridfield tr.select-existing {
+	cursor: pointer!important;
+}
+
+.cms .ss-gridfield tr.select-existing input.select-existing {
+	display: none;
+}
+
+.cms .ss-gridfield tr.select-existing .ui-icon.checked { display: none; }
+.cms .ss-gridfield tr.select-existing .ui-icon.unchecked { display: inherit; }
+
+.cms .ss-gridfield tr.select-existing.select-existing-selected .ui-icon.checked { display: inherit; }
+.cms .ss-gridfield tr.select-existing.select-existing-selected .ui-icon.unchecked { display: none; }
