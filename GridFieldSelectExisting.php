@@ -55,8 +55,10 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 
 		if ($list instanceof ManyManyList) {
 			$class = $row->className;
-			$join = "\"{$row->className}\".\"ID\" = \"{$list->joinTable}\".\"{$list->getLocalKey()}\"";
-			$list = $class::get()->innerJoin($list->joinTable, $join);
+			$join = "\"$class\".\"ID\" = \"{$list->joinTable}\".\"{$list->getLocalKey()}\"";
+			$record = $grid->getForm()->getRecord();
+			$list = $class::get()->innerJoin($list->joinTable, $join)
+				->filter([ $list->getForeignKey() => $record->ID ]);
 		}
 
 		// filter list to only include row
