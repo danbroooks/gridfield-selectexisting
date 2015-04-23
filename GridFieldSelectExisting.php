@@ -101,13 +101,4 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 			$list->add($gridfieldItem);
 		}
 	}
-
-	private function relationsFromManyMany(ManyManyList $mml) {
-		$relations = explode('_', $mml->joinTable);
-
-		return ArrayData::create([
-			'foreign' => $relations[0],
-			'local' => $relations[1]
-		]);
-	}
 }
