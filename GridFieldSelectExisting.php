@@ -10,12 +10,12 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 	}
 
 	public function getHTMLFragments($grid) {
-		
+
 		$directory = Config::inst()->get(__CLASS__, 'Base') ?: self::$base_path;
 
 		Requirements::css($directory . '/GridFieldSelectExisting.css');
 		Requirements::javascript($directory . '/GridFieldSelectExisting.js');
-		
+
 		return '';
 	}
 
@@ -50,7 +50,7 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 	}
 
 	public function getColumnContent($grid, $row, $columnName) {
-		
+
 		$list = $grid->getList();
 
 		if ($list instanceof ManyManyList) {
@@ -59,7 +59,7 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 			$list = $class::get()->innerJoin($list->joinTable, $join);
 		}
 
-		// filter list to only include row 
+		// filter list to only include row
 		$checked = ($list->filter(["ID" => $row->ID])->count() > 0);
 
 		$checkbox = CheckboxField::create(self::$column_name, self::$column_name, $checked);
@@ -86,9 +86,6 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 		if(!isset($value[__CLASS__]) || !is_array($value[__CLASS__])) {
 			return;
 		}
-		
-		// add relations based on list
-		$relation = $list->dataClass;
 
 		foreach($value[__CLASS__] as $id => $v) {
 			if(!is_numeric($id)) {
@@ -101,8 +98,7 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 				continue;
 			}
 
-			$record->$relation()->add($gridfieldItem);
-			$record->write(null, null, null, false);
+			$list->add($gridfieldItem);
 		}
 	}
 
