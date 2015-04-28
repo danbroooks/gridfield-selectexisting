@@ -82,17 +82,27 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 		$list = $grid->getList();
 		$value = $grid->Value();
 
-		// clear all existing relations
-		$list->removeAll();
-
 		if(!isset($value[__CLASS__]) || !is_array($value[__CLASS__])) {
+			// throw error ?
 			return;
 		}
+
+		$updatedList = ArrayList::create();
 
 		foreach($value[__CLASS__] as $id => $v) {
 			if(!is_numeric($id)) {
 				continue;
 			}
+
+			$updatedList->push($id);
+		}
+
+		$list->exclude([ 'ID' => $updatedList->toArray() ])->removeAll();
+
+		foreach($updatedList->toArray() as $i => $id) {
+
+			// if list already contains item, leave it there
+			if ($list->byID($id)) continue;
 
 			$gridfieldItem = DataObject::get_by_id($list->dataClass, $id);
 
