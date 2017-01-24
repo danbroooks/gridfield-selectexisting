@@ -82,8 +82,9 @@ class GridFieldSelectExisting implements GridField_HTMLProvider, GridField_DataM
 		$list = $grid->getList();
 		$value = $grid->Value();
 
-		if(!isset($value[__CLASS__]) || !is_array($value[__CLASS__])) {
-			// throw error ?
+		if(!isset($value[__CLASS__])) {
+			// All items have been cleared
+            $list->removeAll();
 			return;
 		}
 
